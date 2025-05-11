@@ -1,4 +1,4 @@
-
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import LessonCard from "./LessonCard";
@@ -7,6 +7,7 @@ import ProfileSection from "./ProfileSection";
 import LanguageSelector from "./LanguageSelector";
 import ImmersionCard from "./ImmersionCard";
 import { Book, MessageCircle, Volume } from "lucide-react";
+import { initializeLocalData } from "@/lib/storage-utils";
 
 // Mock data
 const recentLessons = [
@@ -91,13 +92,18 @@ const immersionExperiences = [
 ];
 
 const Dashboard = () => {
+  useEffect(() => {
+    // Initialize local storage data if not present
+    initializeLocalData();
+  }, []);
+
   return (
     <div className="container py-8 max-w-7xl">
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Main content */}
         <div className="flex-1 space-y-8">
           {/* Top section */}
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 animate-fade-in-up">
             <div>
               <h1 className="text-2xl font-bold mb-1">Welcome back!</h1>
               <p className="text-gray-600">Continue your language journey</p>
@@ -107,7 +113,7 @@ const Dashboard = () => {
           
           {/* Quick stats */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 flex items-center gap-4">
+            <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 flex items-center gap-4 animate-fade-in-left" style={{ animationDelay: "100ms" }}>
               <div className="bg-lingua-teal/10 p-3 rounded-full">
                 <Book size={20} className="text-lingua-teal" />
               </div>
@@ -116,7 +122,7 @@ const Dashboard = () => {
                 <p className="text-xl font-semibold">24</p>
               </div>
             </div>
-            <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 flex items-center gap-4">
+            <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 flex items-center gap-4 animate-fade-in-left" style={{ animationDelay: "200ms" }}>
               <div className="bg-lingua-purple/10 p-3 rounded-full">
                 <Volume size={20} className="text-lingua-purple" />
               </div>
@@ -125,7 +131,7 @@ const Dashboard = () => {
                 <p className="text-xl font-semibold">186</p>
               </div>
             </div>
-            <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 flex items-center gap-4">
+            <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-200 flex items-center gap-4 animate-fade-in-left" style={{ animationDelay: "300ms" }}>
               <div className="bg-lingua-orange/10 p-3 rounded-full">
                 <MessageCircle size={20} className="text-lingua-orange" />
               </div>
@@ -137,7 +143,7 @@ const Dashboard = () => {
           </div>
           
           {/* Lessons section */}
-          <div>
+          <div className="animate-fade-in-up" style={{ animationDelay: "300ms" }}>
             <Tabs defaultValue="recent">
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-xl font-semibold">Your Lessons</h2>
@@ -149,16 +155,20 @@ const Dashboard = () => {
               
               <TabsContent value="recent" className="mt-0">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {recentLessons.map((lesson) => (
-                    <LessonCard key={lesson.id} {...lesson} />
+                  {recentLessons.map((lesson, index) => (
+                    <div key={lesson.id} className="animate-fade-in-up" style={{ animationDelay: `${400 + index * 100}ms` }}>
+                      <LessonCard {...lesson} />
+                    </div>
                   ))}
                 </div>
               </TabsContent>
               
               <TabsContent value="recommended" className="mt-0">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {recommendedLessons.map((lesson) => (
-                    <LessonCard key={lesson.id} {...lesson} />
+                  {recommendedLessons.map((lesson, index) => (
+                    <div key={lesson.id} className="animate-fade-in-up" style={{ animationDelay: `${400 + index * 100}ms` }}>
+                      <LessonCard {...lesson} />
+                    </div>
                   ))}
                 </div>
               </TabsContent>
@@ -166,15 +176,17 @@ const Dashboard = () => {
           </div>
           
           {/* Immersion moments */}
-          <div>
+          <div className="animate-fade-in-up" style={{ animationDelay: "600ms" }}>
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-semibold">Immersion Moments</h2>
               <Button variant="link" className="text-lingua-teal">See All</Button>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {immersionExperiences.map((experience) => (
-                <ImmersionCard key={experience.id} {...experience} />
+              {immersionExperiences.map((experience, index) => (
+                <div key={experience.id} className="animate-fade-in-up" style={{ animationDelay: `${700 + index * 100}ms` }}>
+                  <ImmersionCard {...experience} />
+                </div>
               ))}
             </div>
           </div>
@@ -185,7 +197,7 @@ const Dashboard = () => {
           <ProfileSection />
           <ProgressChart />
           
-          <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-200">
+          <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-200 animate-fade-in-right" style={{ animationDelay: "500ms" }}>
             <h3 className="font-semibold mb-3">Daily Challenge</h3>
             <p className="text-sm text-gray-600 mb-3">
               Complete a 5-minute pronunciation challenge to earn bonus XP!
