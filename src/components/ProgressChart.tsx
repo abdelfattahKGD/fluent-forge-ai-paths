@@ -4,7 +4,7 @@ import { ChartContainer } from "@/components/ui/chart";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { getLearningStats, getDefaultLearningStats } from "@/lib/storage-utils";
+import { getLearningStats, getDefaultLearningStats, getUserData, getDefaultUserData } from "@/lib/storage-utils";
 
 interface ProgressChartProps {
   className?: string;
@@ -12,6 +12,7 @@ interface ProgressChartProps {
 
 const ProgressChart = ({ className }: ProgressChartProps) => {
   const [stats, setStats] = useState(getDefaultLearningStats());
+  const [userData, setUserData] = useState(getDefaultUserData());
   const [visible, setVisible] = useState(false);
   
   useEffect(() => {
@@ -21,12 +22,18 @@ const ProgressChart = ({ className }: ProgressChartProps) => {
       setStats(storedStats);
     }
     
+    // Load user data from localStorage
+    const storedUserData = getUserData();
+    if (storedUserData) {
+      setUserData(storedUserData);
+    }
+    
     // Trigger animation after component mounts
     const timer = setTimeout(() => setVisible(true), 300);
     return () => clearTimeout(timer);
   }, []);
   
-  const streak = stats.streakDays || 0;
+  const streak = userData.streakDays || 0;
   const totalTimeThisWeek = stats.lastWeekActivity.reduce((acc, day) => acc + day.minutes, 0);
   const dailyAverage = Math.round(totalTimeThisWeek / 7);
   
