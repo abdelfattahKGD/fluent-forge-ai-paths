@@ -48,8 +48,7 @@ const ProfileSection = () => {
             <span className="font-medium text-gray-700">Daily Goal</span>
             <span className="text-lingua-orange">{user.dailyGoal.completed}/{user.dailyGoal.total} completed</span>
           </div>
-          <Progress value={dailyProgress} className="h-2 bg-gray-100" 
-            indicatorClassName="bg-lingua-orange" />
+          <Progress value={dailyProgress} className="h-2 bg-gray-100" />
         </div>
       </div>
       

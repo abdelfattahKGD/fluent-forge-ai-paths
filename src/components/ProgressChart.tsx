@@ -1,7 +1,8 @@
 
-import { AreaChart } from "@/components/ui/chart";
+import { ChartContainer } from "@/components/ui/chart";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 const data = [
   { day: "Mon", minutes: 12 },
@@ -40,14 +41,30 @@ const ProgressChart = ({ className }: ProgressChartProps) => {
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="h-[140px]">
-          <AreaChart
-            data={data}
-            categories={["minutes"]}
-            index="day"
-            colors={["#38B2AC"]}
-            valueFormatter={(value) => `${value} min`}
-            yAxisWidth={30}
-          />
+          <ChartContainer 
+            config={{
+              minutes: {
+                label: "Minutes",
+                color: "#38B2AC",
+              },
+            }}
+          >
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={data}>
+                <XAxis dataKey="day" />
+                <YAxis width={30} />
+                <Tooltip 
+                  formatter={(value) => [`${value} min`, "Time Spent"]} 
+                  cursor={{ fill: "rgba(0,0,0,0.05)" }} 
+                />
+                <Bar 
+                  dataKey="minutes" 
+                  fill="#38B2AC" 
+                  radius={[4, 4, 0, 0]} 
+                />
+              </BarChart>
+            </ResponsiveContainer>
+          </ChartContainer>
         </div>
         
         <div className="grid grid-cols-2 gap-4">
