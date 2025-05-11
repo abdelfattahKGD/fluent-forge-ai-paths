@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 const languages = [
+  { code: "en", name: "English", flag: "🇺🇸" },
+  { code: "ar", name: "Arabic", flag: "🇪🇬" },
   { code: "es", name: "Spanish", flag: "🇪🇸" },
   { code: "fr", name: "French", flag: "🇫🇷" },
   { code: "de", name: "German", flag: "🇩🇪" },
